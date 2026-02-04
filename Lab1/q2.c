@@ -1,20 +1,17 @@
-#include <stdio.h>
-#include <mpi.h>
+#include<mpi.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-int main(int argc, char *argv[]) {
-    int rank;
+int main(int argc, char *argv[]){
+    int rank, size;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    int a = 20, b = 5;
-    int r = rank%4;
-    if(r==0)
-        printf("Rank %d: %d + %d = %d\n", rank, a, b, a + b);
-    else if(r==1)
-        printf("Rank %d: %d - %d = %d\n", rank, a, b, a - b);
-    else if(r==2)
-        printf("Rank %d: %d * %d = %d\n", rank, a, b, a * b);
-    else
-        printf("Rank %d: %d / %d = %d\n", rank, a, b, a / b);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+    int a = 50, b = 10;
+    if(rank==0) printf("a+b : %d\n", a+b);
+    else if(rank==1) printf("a-b : %d\n", a-b);
+    else if(rank==2) printf("a*b : %d\n", a*b);
+    else if(rank==3) printf("a/b : %d\n", a/b);
     MPI_Finalize();
     return 0;
 }
